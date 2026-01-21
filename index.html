@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Tchello's Pizzaria</title>
+    <title>Marcos's Pizzaria</title>
 </head>
 <body>
     <div class="topo">
-        <h1>Tchello's Pizzaria</h1>
+        <h1>Marcos's Pizzaria</h1>
         <h2>A melhor pizzaria da região!</h2>
     </div>
     <h3>Pizzas</h3>
@@ -71,19 +71,8 @@
         <p><strong>R$4,50</strong></p>
        </div>
        <footer>
-            <div class="fimPedido" id="pedido">
-                <div class="endereco">
-                    <p>Endereço de entrega:</p>
-                    <input type="text" name="endereco" id="endereco">
-                </div>
-                <div class="troco">
-                    <p>Precisa de Troco?</p>
-                    <input type="number" name="troco" id="troco">
-                    <p class="valorPedido">Seu pedido deu:</p>
-                    <p id="valorPedido"></p>
-                </div>
-                <input type="button" value="Fazer Pedido" onclick="pedido()" id="fazerPedido">
-            </div>
+            <button class="fimPedido" onclick="pedido()" id="fimPedido">Finalizar Pedido</button>
+            <p id="valorPedido"></p>
        </footer>
 </body>
 </html>

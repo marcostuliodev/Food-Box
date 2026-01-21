@@ -1,88 +1,124 @@
-let prato;
-let bebida;
-let sobremesa;
-let valorPrato;
-let valorBebida;
-let valorSobremesa;
-
-function pepperoni() {
-    document.getElementById("pepperoni").style.borderColor = "green";
-    document.getElementById("queijos").style.borderColor = "white";
-    document.getElementById("portuguesa").style.borderColor = "white";
-
-    prato = "pepperoni";
-    valorPrato = parseFloat(25.90)
-}
-function queijos() {
-    document.getElementById("queijos").style.borderColor = "green";
-    document.getElementById("pepperoni").style.borderColor = "white";
-    document.getElementById("portuguesa").style.borderColor = "white";
-
-    prato = "queijos";
-    valorPrato = parseFloat(35.90)
-}
-function portuguesa() {
-    document.getElementById("portuguesa").style.borderColor = "green";
-    document.getElementById("pepperoni").style.borderColor = "white";
-    document.getElementById("queijos").style.borderColor = "white";
-
-    prato = "portuguesa";
-    valorPrato = parseFloat(39.90)
-}
-function fanta() {
-    document.getElementById("fanta").style.borderColor = "green";
-    document.getElementById("coca").style.borderColor = "white";
-    document.getElementById("guarana").style.borderColor = "white";
-
-    bebida = "fanta";
-    valorBebida = parseFloat(11.90)
-}
-function coca() {
-    document.getElementById("coca").style.borderColor = "green";
-    document.getElementById("fanta").style.borderColor = "white";
-    document.getElementById("guarana").style.borderColor = "white";
-
-    bebida = "coca";
-    valorBebida = 13
-}
-function guarana() {
-    document.getElementById("guarana").style.borderColor = "green";
-    document.getElementById("fanta").style.borderColor = "white";
-    document.getElementById("coca").style.borderColor = "white";
-
-    bebida = "guarana";
-    valorBebida = parseFloat(10.90)
-}
-function prest(){
-    document.getElementById("prestigio").style.borderColor = "green";
-    document.getElementById("kitkat").style.borderColor = "white";
-
-    sobremesa = "prestigio"
-    valorSobremesa = parseFloat(3.50)
-}
-function kitkat(){
-    document.getElementById("prestigio").style.borderColor = "white";
-    document.getElementById("kitkat").style.borderColor = "green";
-
-    sobremesa = "kitkat"
-    valorSobremesa = parseFloat(4.50)
-}
-
-function pedido(){
-    let pedido;
-    if(prato == true && sobremesa == false && bebida == false ){
-        pedido = valorPrato
-    }else if(prato == false && sobremesa == false && bebida == true){
-        pedido = valorBebida
-    }else if(prato == false && sobremesa == true && bebida == false){
-        pedido = valorSobremesa
-    }else if(prato == true && sobremesa == false && bebida == true){
-        pedido = valorPrato + valorBebida
-    }else if(prato == true && sobremesa == true && bebida == false){
-        pedido = valorPrato + valorSobremesa
-    }else{
-        pedido = valorBebida ||+ valorPrato ||+ valorSobremesa
+// Dados dos produtos
+const produtos = {
+    pratos: {
+        pepperoni: { nome: "Pepperoni", valor: 25.90 },
+        queijos: { nome: "Quatro Queijos", valor: 35.90 },
+        portuguesa: { nome: "Portuguesa", valor: 39.90 }
+    },
+    bebidas: {
+        fanta: { nome: "Fanta Laranja 2L", valor: 11.90 },
+        coca: { nome: "Coca-Cola 2L", valor: 13.00 },
+        guarana: { nome: "Guaraná Antártica 2L", valor: 10.90 }
+    },
+    sobremesas: {
+        prestigio: { nome: "Prestígio", valor: 3.50 },
+        kitkat: { nome: "KitKat", valor: 4.50 }
     }
-    document.getElementById("valorPedido").innerHTML = String(`R$ ${pedido}0`)
+};
+
+// Estado do pedido
+let pedidoAtual = {
+    prato: null,
+    bebida: null,
+    sobremesa: null
+};
+
+// Função genérica para selecionar item
+function selecionarItem(categoria, tipo) {
+    if (pedidoAtual[categoria] === tipo) {
+        pedidoAtual[categoria] = null;
+    } else {
+        pedidoAtual[categoria] = tipo;
+    }
+    atualizarUI();
+}
+
+// Atualiza valor total e marcações
+function atualizarUI() {
+    atualizarValor();
+    atualizarMarcacoes();
+}
+
+// Calcula valor total
+function atualizarValor() {
+    let total = 0;
     
+    if (pedidoAtual.prato) {
+        total += produtos.pratos[pedidoAtual.prato].valor;
+    }
+    if (pedidoAtual.bebida) {
+        total += produtos.bebidas[pedidoAtual.bebida].valor;
+    }
+    if (pedidoAtual.sobremesa) {
+        total += produtos.sobremesas[pedidoAtual.sobremesa].valor;
+    }
+    
+    document.getElementById("valorPedido").textContent = `R$ ${total.toFixed(2)}`;
+}
+
+// Atualiza marcações visuais
+function atualizarMarcacoes() {
+    // Remove marcação de todos os itens
+    document.querySelectorAll(".selecionado").forEach(el => el.classList.remove("selecionado"));
+    
+    // Marca itens selecionados
+    if (pedidoAtual.prato) {
+        document.getElementById(pedidoAtual.prato)?.classList.add("selecionado");
+    }
+    if (pedidoAtual.bebida) {
+        document.getElementById(pedidoAtual.bebida)?.classList.add("selecionado");
+    }
+    if (pedidoAtual.sobremesa) {
+        document.getElementById(pedidoAtual.sobremesa)?.classList.add("selecionado");
+    }
+}
+
+// Montadores de funções (compatibilidade com onclick)
+function pepperoni() { selecionarItem("prato", "pepperoni"); }
+function queijos() { selecionarItem("prato", "queijos"); }
+function portuguesa() { selecionarItem("prato", "portuguesa"); }
+function fanta() { selecionarItem("bebida", "fanta"); }
+function coca() { selecionarItem("bebida", "coca"); }
+function guarana() { selecionarItem("bebida", "guarana"); }
+function prest() { selecionarItem("sobremesa", "prestigio"); }
+function kitkat() { selecionarItem("sobremesa", "kitkat"); }
+
+// Finalizar pedido
+function pedido() {
+    const { prato, bebida, sobremesa } = pedidoAtual;
+    
+    // Validação
+    if (!prato && !bebida && !sobremesa) {
+        alert("Selecione pelo menos um item!");
+        return;
+    }
+    
+    // Montagem da mensagem
+    let mensagem = "🍕 *NOVO PEDIDO* 🍕\n\n";
+    let total = 0;
+    
+    if (prato) {
+        const valor = produtos.pratos[prato].valor;
+        mensagem += `🍕 ${produtos.pratos[prato].nome} - R$ ${valor.toFixed(2)}\n`;
+        total += valor;
+    }
+    
+    if (bebida) {
+        const valor = produtos.bebidas[bebida].valor;
+        mensagem += `🥤 ${produtos.bebidas[bebida].nome} - R$ ${valor.toFixed(2)}\n`;
+        total += valor;
+    }
+    
+    if (sobremesa) {
+        const valor = produtos.sobremesas[sobremesa].valor;
+        mensagem += `🍫 ${produtos.sobremesas[sobremesa].nome} - R$ ${valor.toFixed(2)}\n`;
+        total += valor;
+    }
+    
+    mensagem += `\n💰 TOTAL: R$ ${total.toFixed(2)}`;
+    
+    // Enviar para WhatsApp
+    const numeroWhatsApp = "5531997451906";
+    const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
+    window.open(urlWhatsApp, "_blank");
 }

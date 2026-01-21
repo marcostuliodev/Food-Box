@@ -1,14 +1,17 @@
 *{
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
+body {
+    padding-bottom: 100px;
+}
 background {
     background: lightgray;
   }
   .topo {
     background: red;
     color: white;
-    padding: 5px;
-    border-radius: 10px;
+    padding: 1em;
+    /* border-radius: 10px; */
     box-shadow: 0 0 10px 0 #bbbbbb;
   }
   .produto {
@@ -75,40 +78,48 @@ background {
     width: 6em;
 }
 
+footer{
+  background: white;
+  border: #bbbbbb 1px solid;
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding: 10px 20px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
 .fimPedido{
-    display: flex;
-    flex-direction: column;
+    background: green;
+    color: white;
+    font-size: 20px;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 #bbbbbb;
+    cursor: pointer;
 }
-.endereco{
-    display: flex;
-    align-items: center;
-    padding: 0.5em;
-    & p{
-        padding: 0.2em;
-        font-weight: 600;
-    }
-    & input{
-        width: 80%;
-        text-align: center;
-        height: 2em;
+#valorPedido{
+    font-size: 20px;
+    font-weight: bold;
+}
+.selecionado {
+    border: 3px solid #4CAF50 !important;
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+    transform: scale()(0.98);
+    -webkit-transform: scale()(0.98);
+    -moz-transform: scale()(0.98);
+    -ms-transform: scale()(0.98);
+    -o-transform: scale()(0.98);
+}
 
-    }
-}
-.troco{
-    display: flex;
-    align-items: center;
-    padding: 0.5em;
-    gap: 5;
-    & p {
-        padding: 0.2em;
-        font-weight: 600;
-    }
-    & .valorPedido{
-        padding-left: 5em;
-    }
-    & input{
-        width: 20%;
-        text-align: center;
-        height: 2em;
-    }
+.produto.selecionado,
+.bebida.selecionado,
+.sobremesa.selecionado {
+    border: 3px solid #4CAF50 !important;
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+    background-color: rgba(76, 175, 80, 0.1);
 }
